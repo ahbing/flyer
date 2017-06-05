@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  p 这是一个多美丽又遗憾的世界啊！！！
+  form(action="/mail/create" method="POST")
+    input(type="email",name="mail", placeholder="mail")
+    br
+    input(type="password",name="pass", placeholder="pass")
+    br
+    input(type="text",name="firstName", placeholder="firstName")
+    br
+    input(type="text",name="lastName", placeholder="lastName")
+    br
+    input(type="text",name="homeaddress1", placeholder="homeaddress1")
+    br
+    input(type="text",name="homecity", placeholder="homecity")
+    br
+    input(type="text", name="homecountryname", placeholder='homecountryname', value='CN')
+    br
+    input(type="submit", value="create")

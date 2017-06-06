@@ -12,4 +12,6 @@ router.post('/create', mail.create);
 
 router.post('/update', mail.update);
 
+router.post('/delete', mail.delete);
+
 module.exports = router;

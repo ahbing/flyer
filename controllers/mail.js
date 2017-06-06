@@ -122,3 +122,29 @@ exports.update = function(req, res) {
     });
   });
 };
+
+exports.delete = function(req, res) {
+  let body = req.body;
+  let mailName = body.mail;
+  let clientID = body.clientID;
+  co(function* () {
+    if (clientID !== config.clientID) {
+      yield Promise.reject(new errors.ForbiddenError('你没有权限进行这样的操作'))
+    }
+
+    let newMail = yield mailProxy.deleteMailByMailName(mailName);
+    return newMail;
+  }).then(
+    function(newMail) {
+      res.flyer.send('mail', {
+        message: 200,
+        mail: newMail
+      })
+    }
+  )
+  .catch(function(err) {
+    res.flyer.send('error', {
+      error: err
+    });
+  });
+}

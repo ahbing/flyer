@@ -57,7 +57,9 @@ exports.updateMailBodyByMailName = function(mail, body) {
     })
     .exec()
 };
-
+exports.deleteMailByMailName = function(mail) {
+  return Mail.findOneAndRemove({ mail: mail }).exec();
+}
 
 /**
  *  getMails 根据更新时间排序，
@@ -80,6 +82,8 @@ let getMails = exports.getMails = function getMails(page, per_page, query={}) {
     .select(selectMailFileds)
     .exec();
 };
+
+
 
 
 // // 酒店注册完 更新帐号信息

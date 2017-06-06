@@ -76,7 +76,7 @@ let getMails = exports.getMails = function getMails(page, per_page, query={}) {
   let skip = per_page * page;
   return Mail.find(query)
     .sort({
-      activeTime: 1
+      activeTime: -1
     })
     .skip(skip)
     .limit(per_page)

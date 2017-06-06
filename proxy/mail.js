@@ -24,8 +24,9 @@ exports.getMailbyMailName = function(mail) {
 };
 
 // 获取一个没使用过的邮箱
-exports.getMailUnused = function() {
-  return Mail.findOne({ status: 0 })
+exports.getMailByStatus = function(status) {
+  if (!status) status = 0;
+  return Mail.findOne({ status: status })
     .select(selectMailFileds)
     .exec();
 };
@@ -75,7 +76,7 @@ let getMails = exports.getMails = function getMails(page, per_page, query={}) {
   let skip = per_page * page;
   return Mail.find(query)
     .sort({
-      activeTime: -1
+      activeTime: 1
     })
     .skip(skip)
     .limit(per_page)

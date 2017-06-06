@@ -77,7 +77,7 @@ exports.showMail = function(req, res) {
     if (clientID !== config.clientID) {
       yield Promise.reject(new errors.ForbiddenError('你没有权限进行这样的操作'))
     }
-    let mail = yield mailProxy.getMailUnused();
+    let mail = yield mailProxy.getMailByStatus();
     return mail;
   }).then(function(mail) {
     res.flyer.send('mail', {
@@ -90,6 +90,29 @@ exports.showMail = function(req, res) {
     })
   });
 };
+
+// 随机发送酒店未激活的邮箱
+exports.showMail2 = function(req, res) {
+  let clientID = req.query.clientID;
+  
+  co(function*() {
+    if (clientID !== config.clientID) {
+      yield Promise.reject(new errors.ForbiddenError('你没有权限进行这样的操作'))
+    }
+    let mail = yield mailProxy.getMailByStatus(1);
+    return mail;
+  }).then(function(mail) {
+    res.flyer.send('mail', {
+      message: 200,
+      mail: mail
+    })
+  }).catch(function(err) {
+    res.flyer.send('error', {
+      error: err
+    })
+  });
+};
+
 
 
 exports.update = function(req, res) {

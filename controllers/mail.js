@@ -4,21 +4,33 @@ const querystring = require('querystring');
 const mailProxy = require('../proxy/mail');
 const errors = require('../common/errors');
 const config = require('../config');
-
+const random = require('../helper/random');
+const countryData = require('../data/country.json');
+const addressData = require('../data/address.json');
+const lastNameData = require('../data/lastName.json');
+const firstNameData = require('../data/firstName.json');
+// const countryArrLen = 1;
+const cityArrLen = 30;
+const addressArrLen = 370;
+const lastNameArrLen = 196;
+const firstNameArrLen = 516;
 // 数据库添加待注册邮箱
 exports.create = function(req, res) {
   let body = req.body;
   let mail = body.mail;
-  let pass = body.pass;
-  let firstName = body.firstName;
-  let lastName = body.lastName;
-  let homeaddress1 = body.homeaddress1;
-  let homecity = body.homecity;
-  let homecountryname = body.homecountryname;
+  let pass = random.string() + random.number();
+  // let countryArr = countryData['Country'];
+  // let homecountryname = countryArr[random.rangeNum(0, countryArrLen)];
+  let homecountryname = 'CN'; // 中国地址
+  let homecity = countryData[homecountryname][random.rangeNum(0, cityArrLen)];
+  let homeaddress1 = addressData[homecountryname][random.rangeNum(0, addressArrLen)];
+  let lastName = lastNameData[homecountryname][random.rangeNum(0, lastNameArrLen)];
+  let firstName = firstNameData[homecountryname][random.rangeNum(0, firstNameArrLen)];
   let newMail = mailProxy.newAndSave(mail, pass, firstName, lastName, homeaddress1, homecity, homecountryname);
   newMail.then(function(mail) {
     res.flyer.send(200, {
-      message: 'OK'
+      message: 'OK',
+      mail: mail
     })
     // return res.redirect('/mail/' + mail._id);
   }).catch(function(err) {

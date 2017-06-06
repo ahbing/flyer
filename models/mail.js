@@ -5,9 +5,9 @@ const ObjectId = Schema.Types.ObjectId;
 
 const MailSchema = new Schema({
   mail: { type: String },
-  pass: { type: String },
-  status: { type: Number, default: 0 }, // 0：未注册 1: 已注册
-  activeTime: { type: Date, default: Date.now }, // 创建时间
+  pass: { type: String },  // 字母和数字 >6
+  status: { type: Number, default: 0 }, // 0：未注册 1: ba注册 2: mr注册
+  activeTime: { type: Date }, // mr number 创建时间
   firstName: { type: String },
   lastName: { type: String },
   homeaddress1: { type: String }, // 6个账户一样

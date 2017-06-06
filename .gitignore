@@ -1,3 +1,7 @@
 node_modules
 *.log
 config.js
+plugins
+bin/curl.sh
+bin/demo.sh
+bin/mail.txt

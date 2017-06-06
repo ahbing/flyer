@@ -2,7 +2,7 @@
 const models = require('../models');
 const Mail = models.Mail;
 
-const selectMailFileds = 'mail pass firstName lastName homeaddress1 homecity homecountryname status baNumber mrNumber';
+const selectMailFileds = 'mail pass firstName lastName homeaddress1 homecity homecountryname status baNumber mrNumber activeTime';
 
 exports.newAndSave = function(mail, pass, firstName, lastName, homeaddress1, homecity, homecountryname) {
   let newMail = new Mail();
@@ -32,12 +32,17 @@ exports.getMailUnused = function() {
 
 // 航空注册完成更新帐号信息
 exports.updateMailBodyByMailName = function(mail, body) {
-  if (body.baNumber) {
+  if (body.mrNumber) {
     body = Object.assign({}, body, {
-      status: 1,
+      status: 2,
       activeTime: Date.now()
-    })
+    });
+  } else if(body.baNumber) {
+    body = Object.assign({}, body, {
+      status: 1
+    });
   }
+  
   return Mail.findOneAndUpdate({ mail: mail },
     {
       // $set: {

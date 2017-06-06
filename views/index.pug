@@ -1,4 +1,28 @@
 extends layout
 
 block content
-  pre #{ mails }
+  .table-responsive
+    table.table.table-bordered.table-hover
+      thead
+        tr
+          th #
+          th 邮箱
+          th 密码
+          th 姓
+          th 名
+          th 航空
+          th 酒店
+          th 状态
+          th 时间
+      each mail,index in mails
+        tbody
+          tr
+            th(scope='row') #{index}
+            th #{mail.mail}
+            th #{mail.pass}
+            th #{mail.lastName}
+            th #{mail.firstName}
+            th #{mail.baNumber}
+            th #{mail.mrNumber}
+            th #{mail.status}
+            th #{mail.activeTime ? mail.activeTime.toLocaleString() : null}
